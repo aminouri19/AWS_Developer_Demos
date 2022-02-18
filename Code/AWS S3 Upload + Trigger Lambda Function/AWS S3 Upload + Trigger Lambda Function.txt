@@ -1,0 +1,45 @@
+Trigger lambda Function after uploading a file to S3
+
+General steps:
+
+1-Create a lmabda function
+
+2- Create an S3 bucket
+
+3- Configure the trigger to invoke the lambda function when a file is uploaded
+
+Detailed Steps
+
+1- Open the lambda console
+2- Click Create Function button
+3- Select author from scratch
+4- Provide a function name
+5- Select python 3.6 for runtime
+6- Under permissions and under the "execution role" section, select 
+   "Create a new role from AWS policy templates"
+7- Call the Role, "S3AccessRole"
+8- Under "Policy Templates", select "Amazon S3 Object Readonly Permission"
+
+
+
+Lambda Code
+---------
+import json
+import boto3
+import urllib
+
+def lambda_handler(event,context):
+    s3_client = boto3.client('s3')
+
+    bucket_name = event['Records'][0]['s3']['bucket']['name']
+    key = event['Records'][0]['s3']['object']['key']
+    key = urllib.parse.unquote_plus(key, encoding='utf-8')
+
+    message = 'The file named' + key + 'was uploded to bucket named' + bucket_name
+    print(message)
+
+    response = s3_client.get_object(Bucket=bucket_name,Key=key)
+    contents = response["Body"].read().decode()
+    contents = json.loads(contents)
+
+    print("This is the content of the file: \n", contents)

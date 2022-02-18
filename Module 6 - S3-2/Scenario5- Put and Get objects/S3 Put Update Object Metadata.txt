@@ -1,0 +1,6 @@
+import boto3
+
+s3 = boto3.resource('s3')
+s3_object = s3.Object('report-am-55', 'sample.csv')
+s3_object.metadata.update({'name':'cool'})
+s3_object.copy_from(CopySource={'Bucket':'report-am-55', 'Key':'sample.csv'}, Metadata=s3_object.metadata, MetadataDirective='REPLACE')

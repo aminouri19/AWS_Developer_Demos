@@ -1,0 +1,30 @@
+{
+    "Notes": [
+        {
+            "PutRequest": {
+                "Item": {
+                    "UserId": {"S": "User2"},
+                    "NoteId": {"N": "1"},
+                    "Notes": {"S": "Somewhat Famous"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "UserId": {"S": "User3"},
+                    "NoteId": {"N": "1"},
+                    "Notes": {"S": "Somewhat Famous haha"}
+                }
+            }
+        },
+        {
+            "DeleteRequest": {
+                "Key": {
+                    "UserId": {"S": "User1"},
+                    "NoteId": {"N": "2"}
+                }
+            }
+        }
+    ]
+}

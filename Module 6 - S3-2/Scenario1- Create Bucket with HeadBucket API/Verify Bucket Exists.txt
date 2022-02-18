@@ -1,0 +1,21 @@
+			Verify Bucket Exists
+
+simple code:
+-------------
+import boto3
+client = boto3.client('s3')
+Myresponse = client.head_bucket(Bucket='report-am-27')
+print(Myresponse)
+
+
+Method
+-------------
+import boto3
+client = boto3.client('s3')
+s3 = boto3.resource('s3')
+def verifyBucketName(s3Client, bucket):
+    s3Client = client.head_bucket(Bucket=bucket)
+    print(s3Client)
+    raise SystemExit('This bucket already exists')
+
+verifyBucketName(client,'report-am-32')

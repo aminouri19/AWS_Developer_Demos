@@ -1,0 +1,26 @@
+Boto3 Python S3 List Buckets
+
+1- Create a lambda role that allows access to s3 buckets
+2- Create a lambda function and use the role that was just create
+3- Paste the following Python Boto3 code in the function
+
+import json
+import boto3
+
+s3 = boto3.resource('s3')
+
+def lambda_handler(event, context):
+
+    bucketlist = []
+
+    for bucket in s3.buckets.all():
+     bucketlist.append(bucket.name)
+
+    return {
+"statusCode": 200,
+"body": bucketlist
+        
+    }
+
+4- Create a test
+5- Run test

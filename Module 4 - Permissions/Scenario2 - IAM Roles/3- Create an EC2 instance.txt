@@ -1,0 +1,11 @@
+	Create an EC2 Instance, grab id and wait till it's running 
+
+import boto3
+from mypy_boto3_ec2 import waiter
+ec2 = boto3.resource('ec2')
+client = boto3.client('ec2')
+waiter = client.get_waiter('instance_running')
+response = ec2.create_instances(InstanceType = 't2.micro', ImageId = 'ami-053ba2556d59832f0', MaxCount=1, MinCount=1, IamInstanceProfile = {'Name':'Server10'})
+id = response[0].id
+response2 = waiter.wait(InstanceIds=[id])
+

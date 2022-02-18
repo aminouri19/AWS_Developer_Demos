@@ -1,0 +1,15 @@
+		Check status example
+
+Since EC2 commands are asynchronous, one way to make sure the commands 
+ran successfully is to check the status of our instance.
+
+import boto3
+import time
+client = boto3.client('ec2')
+client.stop_instances(InstanceIds=['i-027bcd5309696b92f'])
+time.sleep(15)
+
+if str(response) == "None":
+    print("Instance was stopped successfully!")
+else:
+    print("Nope! Didn't work!")

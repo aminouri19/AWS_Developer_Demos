@@ -1,0 +1,43 @@
+
+
+import boto3
+client = boto3.client('s3')
+
+
+# Step1 - Create multipart upload
+
+response = client.create_multipart_upload(
+    Bucket='webserver-am1',
+    Key='C:\\Users\\aminouri\\Downloads\\police-department-incidents.csv',
+)
+print(response)
+
+
+# Step2 - Upload Parts and Complete Multipart Upload
+
+response = client.complete_multipart_upload(
+    Bucket='examplebucket',
+    Key='bigobject',
+    MultipartUpload={
+        'Parts': [
+            {
+                'ETag': '"d8c2eafd90c266e19ab9dcacc479f8af"',
+                'PartNumber': '1',
+            },
+            {
+                'ETag': '"d8c2eafd90c266e19ab9dcacc479f8af"',
+                'PartNumber': '2',
+            },
+        ],
+    },
+    UploadId='7YPBOJuoFiQ9cz4P3Pe6FIZwO4f7wN93uHsNBEw97pl5eNwzExg0LAT2dUN91cOmrEQHDsP3WA60CEg--',
+)
+
+print(response)
+
+
+verify using the following command
+*	aws s3api list-multipart-uploads --bucket webserver-am1
+
+Delete the multipart upload if it's not completed to close the session
+*	aws s3api abort-multipart-upload --bucket webserver-am1 --key C:\\Users\\aminouri\\Downloads\\police-department-incidents.csv --upload-id <Place Upload ID here>

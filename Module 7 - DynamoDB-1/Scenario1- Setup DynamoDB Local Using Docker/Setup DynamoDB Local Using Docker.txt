@@ -1,0 +1,49 @@
+		Setup DynamoDB Local Using Docker
+
+
+1- Pull dynamodb image from docker
+*	docker pull amazon/dynamodb-local
+2- Verify the image download
+*	docker images
+3- Install boto3
+*	pip install boto3
+4- Run the Image
+*	docker run -p 8000:8000 amazon/dynamodb-local
+5- Create your table and add items
+
+import boto3
+from botocore import waiter
+def main():
+    # 1 - Create Client and Waiter
+    ddb = boto3.resource('dynamodb')
+    client = boto3.client('dynamodb')
+    waiter = client.get_waiter('table_exists')
+
+    # 2 - Create the Table
+    response = client.create_table(TableName='Transactions',
+                     AttributeDefinitions=[
+                         {
+                             'AttributeName': 'TransactionId',
+                             'AttributeType': 'S'
+                         }
+                     ],
+                     KeySchema=[
+                         {
+                             'AttributeName': 'TransactionId',
+                             'KeyType': 'HASH'
+                         }
+                     ],
+                     ProvisionedThroughput= {
+                         'ReadCapacityUnits': 10,
+                         'WriteCapacityUnits': 10
+                     }
+                     )
+    print('Successfully created Table')
+    waiter.wait(TableName='Transactions')
+    # Input Item to Table
+    table = ddb.Table('Transactions')
+    table.put_item(Item= {'TransactionId': '9a0','company':  'microsoft', 'State': 'Pending'})
+    print('Items added Successfully!')
+
+
+main()

@@ -1,0 +1,9 @@
+		Copy files to s3 and sync afterwards
+
+1- Copy all files to bucket
+*	aws s3 cp ./ s3://report-am-9/ --recursive 
+
+2- Make change to a single file
+
+3- Sync the changes to the bucket
+*	aws s3 sync ./ s3://report-am-9/

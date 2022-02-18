@@ -1,0 +1,99 @@
+CRUD EC2 Instance
+
+Create an EC2 Instance
+----------------------
+import boto3
+ec2 = boto3.resource('ec2')
+response = ec2.create_instances(InstanceType = 't2.micro', ImageId = 'ami-053ba2556d59832f0', MaxCount=1, MinCount=1)
+print(response)
+
+
+Delete EC2 Instances
+----------------------
+import boto3
+ec2 = boto3.resource('ec2')
+response = ec2.instances.filter(InstanceIds=['i-0ac60955300cacec5']).terminate()
+print(response)
+
+
+List all Ec2 Instance Id's
+-------------
+import boto3
+ec2 = boto3.resource('ec2')
+allinstances = ec2.instances.all()
+for instance in allinstances:
+    print(instance)
+
+
+Start/Stop EC2 instances
+-----------------
+import boto3
+ec2 = boto3.resource('ec2')
+allinstances = ec2.instances.filter(InstanceIds=['i-0d19ce488cb88b2ca']).stop()
+for instance in allinstances:
+    print(instance)
+
+
+Start/Stop EC2 instances
+-----------------
+import boto3
+client = boto3.client('ec2')
+response = client.start_instances(InstanceIds=['i-0d19ce488cb88b2ca'])
+print(response)
+
+
+Attach the AmazonSSMManagaedInstanceCore role to the instance
+-----------------
+import boto3
+client = boto3.client('ec2')
+
+response = client.associate_iam_instance_profile(
+    IamInstanceProfile={
+        'Arn': 'arn:aws:iam::511349353831:instance-profile/AmazonSSMManagedInstanceCoreRole',
+    },
+    InstanceId='i-0d19ce488cb88b2ca',
+)
+
+print(response)
+
+
+
+Attach a Tag for your EC2 instance
+-------------
+import boto3
+ec2 = boto3.resource('ec2')
+response = ec2.create_tags(Resources=['i-0d19ce488cb88b2ca'], Tags=[{'Key':'Name', 'Value':'Cool-App'}])
+print(response)
+
+
+List the tags of an EC2 Instance
+--------------
+import boto3
+client = boto3.client('ec2')
+Ec2_Tags = client.describe_tags(Filters=[{'Name': 'resource-id','Values': ['i-027bcd5309696b92f']}])
+for tags in Ec2_Tags['Tags']:
+    print(tags['Key'],tags['Value'])
+
+
+
+Create a VPC
+------------
+import boto3
+client = boto3.client('ec2')
+print(client.create_vpc(CidrBlock='10.0.0.0/16'))
+
+
+Delete a VPC
+------------
+import boto3
+client = boto3.client('ec2')
+print(client.delete_vpc(VpcId='vpc-03c308fe10ac620eb'))
+
+
+Create EC2 key pair and download key
+------------
+import boto3
+response = ec2.create_key_pair(KeyName = "Ohio-key")
+file = open('Ohio-key.pem', 'w')
+file.write(response['KeyMaterial'])
+file.close

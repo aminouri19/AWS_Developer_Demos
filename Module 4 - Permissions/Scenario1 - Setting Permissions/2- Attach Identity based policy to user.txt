@@ -1,0 +1,16 @@
+		Attach Identity Based Policy to User
+
+Attach the identity policy that was created in step 1 to user bob
+
+import boto3
+
+# Create IAM client
+iam = boto3.client('iam')
+
+# Attach a role policy
+iam.attach_user_policy(
+    PolicyArn='arn:aws:iam::511349353831:policy/myS3Policy',
+    UserName='bob'
+)
+
+Ref: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/iam-example-policies.html

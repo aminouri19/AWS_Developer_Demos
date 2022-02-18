@@ -1,0 +1,26 @@
+{
+    "SuperHero": "The Winchester Brothers",
+    "Villain1": "Vampires",
+    "Villain2": "Ghosts",
+    "Villain3": "Werewolves",
+    "MissionStatus": "Complete",
+    "SecretIdentity": "Sam and Dean"
+}
+
+{
+    "SuperHero": "Iron Man",
+    "Villain1": "Apocalypse",
+    "Villain2": "Doctor Doom",
+    "Villain3": "Loki",
+    "MissionStatus": "In progress",
+    "SecretIdentity": "Tony Stark"
+}
+
+{
+    "SuperHero": "Superman",
+    "Villain1": "Doomsday",
+    "Villain2": "General Zod",
+    "Villain3": "Lex Luthor",
+    "MissionStatus": "In progress",
+    "SecretIdentity": "Clark Kent"
+}

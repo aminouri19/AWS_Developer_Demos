@@ -1,0 +1,54 @@
+		Send an SNS message after S3 object is Deleted
+
+1- Allow you S3 bucket to send events to eventbridge
+	* under the "Properties" tab, scroll down to Amazon EventBridge
+	* Click edit and select on
+2- Create a role that allows lambda to access SNS
+3- Create a Lambda function that can send and sns message and test it
+
+import json
+import boto3
+
+def lambda_handler(event, context):
+    # TODO implement
+    bucketname = event['detail']['bucket']['name']
+    objectname = event['detail']['object']['key']
+    client = boto3.client('sns')
+    response = client.publish(TopicArn = 'arn:aws:sns:us-west-2:511349353831:Email' , Message = 'An object named ' + objectname + ' has been deleted from the ' + bucketname + ' bucket' , Subject = 'Object deleted!') 
+    print(response)
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Hello from Lambda!')
+    }
+
+4- Open cloud watch events or event bridge to create an s3 object delete event and copy the example
+
+{
+  "version": "0",
+  "id": "ad1de317-e409-eba2-9552-30113f8d88e3",
+  "detail-type": "Object Deleted",
+  "source": "aws.s3",
+  "account": "123456789012",
+  "time": "2021-11-12T00:00:00Z",
+  "region": "ca-central-1",
+  "resources": ["arn:aws:s3:::example-bucket"],
+  "detail": {
+    "version": "0",
+    "bucket": {
+      "name": "example-bucket"
+    },
+    "object": {
+      "key": "example-key",
+      "etag": "d41d8cd98f00b204e9800998ecf8427e",
+      "version-id": "mtB0cV.jejK63XkRNceanNMC.qXPWLeK",
+      "sequencer": "00617B398000000000"
+    },
+    "request-id": "20EB74C14654DC47",
+    "requester": "s3.amazonaws.com",
+    "reason": "Lifecycle Expiration",
+    "deletion-type": "Delete Marker Created"
+  }
+}
+
+5- Read value from the event and embed in lambda code
+6- Run test

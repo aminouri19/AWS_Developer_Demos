@@ -1,0 +1,20 @@
+		S3 Get Object with Logging Enabled
+
+
+import boto3
+import logging
+s3 = boto3.resource('s3')
+logging.basicConfig(filename='C:\\Users\\aminouri\\Documents\\Coding\\test.log',level=logging.INFO)
+def get_object(bucket, object_key):
+    try:
+        obj = s3.Object(bucket, object_key)
+        bdy = obj.get()['Body'].read()
+        logging.info("Got object '%s' from bucket '%s'.", object_key, bucket)
+    except:
+        logging.exception(("Couldn't get object'%s' from bucket '%s'.", object_key, bucket))
+        print('Object not accessible')
+
+get_object('report-am-27','test.txt')
+
+
+pyhton logging explained: https://www.youtube.com/watch?v=-ARI4Cz-awo

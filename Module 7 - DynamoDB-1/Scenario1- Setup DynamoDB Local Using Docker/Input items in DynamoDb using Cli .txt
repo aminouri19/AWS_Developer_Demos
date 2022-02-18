@@ -1,0 +1,1 @@
+aws dynamodb put-item --table-name Notes --item '{"UserId":{"S":"StudentA"},"NoteId":{"N":"11"},"Note":{"S":"HelloWorld!"}}

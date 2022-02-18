@@ -1,0 +1,4 @@
+		Create table using Cli
+
+Run the following command to create the table using the json file
+*	aws dynamodb create-table --cli-input-json file://table.json --region us-west-2

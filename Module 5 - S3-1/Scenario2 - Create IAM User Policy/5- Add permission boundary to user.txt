@@ -1,0 +1,10 @@
+		Add permission boundary to user
+
+import json
+import boto3
+client = boto3.client('iam')
+response = client.put_user_permissions_boundary(
+    UserName='sara',
+    PermissionsBoundary='arn:aws:iam::511349353831:policy/s3-report-am-4-list-access-permission-boundary'
+)
+print(response)

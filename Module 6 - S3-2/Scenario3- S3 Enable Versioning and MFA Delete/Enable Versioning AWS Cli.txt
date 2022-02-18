@@ -1,0 +1,10 @@
+		Enable Bucket Versioning AWS Cli
+
+Check the versioning status of a bucket
+*	aws s3api get-bucket-versioning --bucket report-am-27
+
+Enable Versioning on a Bucket
+*	aws s3api put-bucket-versioning --bucket report-am-27 --versioning-configuration Status=Enabled
+
+Disable Versioning of a Bucket
+*	aws s3api put-bucket-versioning --bucket report-am-27 --versioning-configuration Status=Suspended

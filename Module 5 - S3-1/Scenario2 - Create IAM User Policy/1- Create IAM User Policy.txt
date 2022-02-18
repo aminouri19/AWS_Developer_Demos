@@ -1,0 +1,11 @@
+			Create IAM User Policy
+
+import json
+import boto3
+iam = boto3.client('iam')
+my_managed_policy = {"Version": "2012-10-17","Statement" : [{"Effect" : "Allow","Action" : "s3:*","Resource" : "arn:aws:s3:::report-am-4"}]}
+response = iam.create_policy(
+  PolicyName='s3-report-am-4-full-access',
+  PolicyDocument=json.dumps(my_managed_policy)
+)
+print(response)

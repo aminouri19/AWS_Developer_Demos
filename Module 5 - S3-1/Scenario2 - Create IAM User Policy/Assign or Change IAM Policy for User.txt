@@ -1,0 +1,17 @@
+		Assign or Change IAM Policy for User
+
+
+import boto3
+from mypy_boto3_ec2 import waiter
+client = boto3.client('iam')
+waiter = client.get_waiter('role_exists')
+client.create_role(
+    Path='/',
+    RoleName='S3-Access',
+    AssumeRolePolicyDocument='{"Version": "2012-10-17","Statement" : [{"Effect" : "Allow","Action" : "s3:*","Resource" : "arn:aws:s3:::report-am-4"}]}'
+)
+response = waiter.wait(RoleName='S3-Access')
+print(response)
+response2 = client.attach_role_policy(
+    RoleName='S3-Access', UserArn='arn:aws:iam::511349353831:user/amin')
+print(response2)

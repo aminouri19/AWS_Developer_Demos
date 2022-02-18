@@ -1,0 +1,6 @@
+import boto3
+
+s3 = boto3.resource('s3')
+bucket_versioning = s3.BucketVersioning('report-am-27')
+response = bucket_versioning.enable()
+print(response)

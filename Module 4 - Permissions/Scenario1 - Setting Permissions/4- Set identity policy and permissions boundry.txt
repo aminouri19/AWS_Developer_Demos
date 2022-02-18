@@ -1,0 +1,15 @@
+import boto3
+
+# Create IAM client
+iam = boto3.client('iam')
+
+# Attach a role policy
+iam.attach_user_policy(
+    PolicyArn='arn:aws:iam::aws:policy/AmazonS3FullAccess',
+    UserName='bob'
+)
+response = iam.put_user_permissions_boundary(
+    UserName='bob',
+    PermissionsBoundary='arn:aws:iam::511349353831:policy/myS3Policy'
+)
+print(response)

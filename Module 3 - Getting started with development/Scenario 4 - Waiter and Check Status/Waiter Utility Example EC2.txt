@@ -1,0 +1,17 @@
+			Waiter Utility Example
+
+In this example, the python code will run the instance stop command
+and wait for min 15 seconds for the script to finish. If the script
+stops the instance successfully, a "None" response will be sent to
+the console.
+
+import boto3
+from mypy_boto3_ec2 import waiter
+client = boto3.client('ec2')
+waiter = client.get_waiter('instance_stopped')
+client.stop_instances(InstanceIds=['i-027bcd5309696b92f'])
+response = waiter.wait(InstanceIds=['i-027bcd5309696b92f'])
+if str(response) == "None":
+    print("Instance was stopped successfully!")
+else:
+    print("Nope! Didn't work!")

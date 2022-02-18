@@ -1,0 +1,31 @@
+		Create Lambda Function to Query Yahoo Successfully
+
+
+1- Open VScode
+2- In the terminal create a folder called query. Move into the folder
+*	mkdir query
+*	cd query
+3- Create a file called query.py
+*	echo "#new python script" > query.py
+4- Run the following command to install requests in python. This will add many new folders an files in this folder.
+*	pip install requests -t .
+5- open the file from the left
+6- Add the following code to the file. If the query returns a 200 response code, then we will see the message.
+import requests
+
+def lambda_handler(event=None, context=None):
+    response = requests.get("https://www.yahoo.com")
+    if response.status_code == 200:
+        return "Yahoo query was successful"
+7- Open the folder in the browser, select all the files, right click, click "send to --> Compressed(zip) folder" and call it "query.zip"
+8- Open Lambda in aws
+9- Click "Create Function"
+10- Call it "query-yahoo"
+11- Select "Python 3.9" for runtime
+12- Click Create function
+13- Under "Upload From", select ".zip file"
+14- Click "Upload", under the query folder select "query.zip" and save
+15- Scroll down to "runtime settings" and hit "edit"
+16- Rename handler to "query.query_yahoo" and hit save. query is the filename and query_yahoo is the function name.
+17- Click "Test", under "Event name" place "testing_query"
+18- Hot "Test", we should see "Yahoo query was successful" under "execution results"

@@ -1,0 +1,14 @@
+Create an instance profile and attach role to profile
+
+import boto3
+from mypy_boto3_ec2 import waiter
+iam_client = boto3.client('iam')
+instance_profile = iam_client.create_instance_profile(
+    InstanceProfileName='Server6',
+)
+waiter = iam_client.get_waiter('instance_profile_exists')
+response = waiter.wait(InstanceProfileName='Server6')
+response = iam_client.add_role_to_instance_profile(
+    InstanceProfileName='Server6',
+    RoleName='Ec2-S3-Access-AM2'
+)

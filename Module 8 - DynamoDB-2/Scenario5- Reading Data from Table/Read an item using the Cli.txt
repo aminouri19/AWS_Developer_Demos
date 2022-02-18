@@ -1,0 +1,6 @@
+
+Eventually Consistent Read
+*	aws dynamodb get-item --table-name Notes --key '{"UserId": {"S": "user1"}, "NoteId": {"N": "1"}}'
+
+Fully Consistent Read
+*	aws dynamodb get-item --table-name Notes --key '{"UserId": {"S": "user1"}, "NoteId": {"N": "1"}}' --consistent-read

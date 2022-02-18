@@ -1,0 +1,1 @@
+https://www.cloudmantra.net/blog/how-to-enable-mfa-delete-for-s3-bucket/

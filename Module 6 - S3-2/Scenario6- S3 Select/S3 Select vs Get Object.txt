@@ -1,0 +1,31 @@
+		S3 Select vs Get Object
+
+
+import boto3
+
+
+client = boto3.client('s3')
+
+resp = client.select_object_content(
+    Bucket='report-am-sf-police-report', 
+    Key='police-department-incidents.csv', 
+    Expression="SELECT * FROM s3object s WHERE s.Category = 'ASSAULT' and s.PdDistrict = 'MISSION' and s.\"Date\" BETWEEN '2004-12-31' AND '2005-01-01'",
+    ExpressionType='SQL',
+    InputSerialization={
+        "CSV": {
+            'FileHeaderInfo': 'USE',
+        },
+    },
+    OutputSerialization={
+        'JSON': {}
+    },
+)
+
+for event in resp['Payload']:
+    if 'Records' in event:
+        print(event['Records']['Payload'].decode('utf-8'))
+    elif 'Stats' in event:
+        print(event['Stats'])
+
+
+Ref: https://www.msp360.com/resources/blog/how-to-use-s3-select-feature-amazon/

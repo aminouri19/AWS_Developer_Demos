@@ -1,0 +1,8 @@
+		Delete the Bucket Policy of a Bucket 
+
+
+import boto3
+s3 = boto3.resource('s3')
+bucketpolicy = s3.BucketPolicy('report-am-4')
+repsonse = bucketpolicy.delete()
+print(repsonse)

@@ -1,0 +1,36 @@
+import boto3
+
+client = boto3.client('dynamodb')
+response = client.batch_write_item(
+    RequestItems={
+        "Notes": [
+        {
+            "PutRequest": {
+                "Item": {
+                    "UserId": {"S": "User4"},
+                    "NoteId": {"N": "1"},
+                    "Notes": {"S": "New note"}
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "UserId": {"S": "User4"},
+                    "NoteId": {"N": "2"},
+                    "Notes": {"S": "Second note"}
+                }
+            }
+        },
+        {
+            "DeleteRequest": {
+                "Key": {
+                    "UserId": {"S": "User3"},
+                    "NoteId": {"N": "2"}
+                }
+            }
+        }
+    ]
+ }
+)
+print(response)

@@ -1,0 +1,10 @@
+import boto3
+
+# Create IAM client
+client = boto3.client('iam')
+
+# Attach a role policy
+client.attach_group_policy(
+    PolicyArn='arn:aws:iam::511349353831:policy/s3-report-am-4-full-access',
+    GroupName='Finance'
+)

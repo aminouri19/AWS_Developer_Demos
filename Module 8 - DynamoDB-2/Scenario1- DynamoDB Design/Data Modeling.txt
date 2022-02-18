@@ -1,0 +1,30 @@
+			DynamoDb Data Modeling	
+
+
+1- Define entities and draw the Entity Relationship Diagram: Define entities and the 
+	relationship between them.
+
+2- Identify relationships between entities: One to One/ One to many
+	There are five startegies
+	1- Denormalization + attribute: This means we can use complex attributes without
+	 the need of another table and joins that are common in relational databases
+	2- Denormalization + Duplication: For example if you have a column for birthday and 
+	 the author has written more than one book, the birthday value will appear as a duplicate
+	 for the second item as well. If the data doesn't change like the birthday, this is good strategy.
+	3- Composite Primary Key + Query: Place items that have the same primary key on the same table.
+	4- Secondary Index + Query: It's a good idea to have attributes that will be used by your application
+	 and attributes that will be used by your secondary indexes.
+	5- Composite Sort Key: Good if the sort key has a hierarchy
+
+3- Identify Access Methods (Patterns): How should your entities be accessed? 
+	list your entitites and find the following about them.
+	1- Should you be able to delete, update, read or create an entity.
+	2- What aspects of the entity should be accessible to other entities
+
+4- Define the primary key for your entities:
+
+entity    Partition-Key   Sort-Key
+------    -------------   --------
+Employee       ORG#1         Emp#1
+Employee       ORG#1         Emp#2
+Organization   ORG#2         Pro#1

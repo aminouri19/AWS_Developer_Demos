@@ -1,0 +1,27 @@
+		Shutdown instances at 5 PM PST
+
+1- Create an IAM role for lambda to access EC2 instances
+2- Create a lambda function to shutdown instances
+
+import json
+import boto3
+
+def lambda_handler(event, context):
+    # TODO implement
+    ec2 = boto3.resource('ec2')
+    allinstances = ec2.instances.all()
+    for instance in allinstances:
+        instance.stop()
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Time to Shut Down the instances')
+    }
+
+3- Create a cloudwatch eventbridge to schedule to run the lambda function
+	* Provide an event name
+	* Select Schedule
+	* Select Cron expression and enter 0 1 * * ? *
+
+Note: 0 is minute / 1 is 1 AM GMT or 5 PM PST / * is day of month / * is month / ? is day of week / * is year
+

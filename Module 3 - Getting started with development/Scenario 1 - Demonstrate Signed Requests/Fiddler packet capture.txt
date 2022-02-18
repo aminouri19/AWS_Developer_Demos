@@ -1,0 +1,7 @@
+1- install fiddler
+2- Configure fiddler to capture traffic from AWS CLI
+3- Show that signed requests will not pass through fiddler
+4- Show that unsigned requests will pass
+5- show that tampering will not work
+6- Show digital signatures protect non-repudiation after 5 minutes
+

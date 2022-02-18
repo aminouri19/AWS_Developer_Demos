@@ -1,0 +1,51 @@
+		Create an Identity based policy
+
+import json
+import boto3
+
+# Create IAM client
+iam = boto3.client('iam')
+
+# Create a policy
+my_s3_policy = {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "s3:ListMultipartUploadParts",
+            "Resource": "arn:aws:s3:::*/*"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucketMultipartUploads",
+                "s3:ListBucketVersions",
+                "s3:ListBucket"
+            ],
+            "Resource": "arn:aws:s3:::*"
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListStorageLensConfigurations",
+                "s3:ListAccessPointsForObjectLambda",
+                "s3:ListAllMyBuckets",
+                "s3:ListAccessPoints",
+                "s3:ListJobs",
+                "s3:ListMultiRegionAccessPoints"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+response = iam.create_policy(
+  PolicyName='myS3Policy',
+  PolicyDocument=json.dumps(my_s3_policy)
+)
+print(response)
+
+
+Ref: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/iam-example-policies.html

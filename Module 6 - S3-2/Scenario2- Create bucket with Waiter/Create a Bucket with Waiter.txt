@@ -1,0 +1,36 @@
+			Create a bucket with waiter 
+
+
+Simple Code
+----------------
+import boto3
+
+client = boto3.client('s3')
+waiter = client.get_waiter('bucket_exists')
+
+def createBucket(client, bucket, location):
+    client.create_bucket(Bucket=bucket, CreateBucketConfiguration={'LocationConstraint': location})
+    waiter.wait(Bucket='report-am-55')
+    print("Bucket has been created")
+
+createBucket(client, 'report-am-29', 'us-west-2')
+
+
+
+
+Detailed Code
+----------------
+import boto3
+
+client = boto3.client('s3')
+waiter = client.get_waiter('bucket_exists')
+
+def createBucket(client, bucket, location):
+    try:
+        client.create_bucket(Bucket=bucket, CreateBucketConfiguration={'LocationConstraint': location})
+        waiter.wait(Bucket='report-am-55')
+        raise SystemExit("Bucket has been created successfully!")
+    except:
+        print("Bucket already exists")
+
+createBucket(client, 'report-am-29', 'us-west-2')

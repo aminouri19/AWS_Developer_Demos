@@ -1,0 +1,11 @@
+			Create IAM User Policy
+
+import json
+import boto3
+iam = boto3.client('iam')
+permission_boundary_policy = {"Version": "2012-10-17","Statement" : [{"Effect" : "Allow","Action" : "s3:ListBucket","Resource" : "arn:aws:s3:::report-am-4"}]}
+response = iam.create_policy(
+  PolicyName='s3-report-am-4-list-access-permission-boundary',
+  PolicyDocument=json.dumps(permission_boundary_policy)
+)
+print(response)

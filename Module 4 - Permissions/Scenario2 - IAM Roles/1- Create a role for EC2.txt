@@ -1,0 +1,29 @@
+	Create a role for EC2 ans assign Full S3 access permission to the role
+
+
+1- In this scenario, we first have to create an IAM role that allows the EC2 service 
+ to consume it. This is called a trust relationship between the role and service
+
+2- In the second step we have to assign permission to the role. This example will allow
+full s3 access to my Ec2 instance.
+
+Note: The important step is that creating the role is an Asynchronous operation, this means
+we must make sure the role is created first, then attach the permission to it. To make this
+happen we will need to use waiters and implenet them in the code. The waiter will wait till
+the role exists and then continue adding the policy.
+
+
+import boto3
+from mypy_boto3_ec2 import waiter
+client = boto3.client('iam')
+waiter = client.get_waiter('role_exists')
+client.create_role(
+    Path='/',
+    RoleName='Ec2-S3-Access-AM2',
+    AssumeRolePolicyDocument='{"Version": "2012-10-17","Statement":[{"Effect": "Allow","Principal": {"Service": "ec2.amazonaws.com"},"Action": "sts:AssumeRole"}]}'
+)
+response = waiter.wait(RoleName='Ec2-S3-Access-AM2')
+print(response)
+response2 = client.attach_role_policy(
+    RoleName='Ec2-S3-Access-AM2', PolicyArn='arn:aws:iam::aws:policy/AmazonS3FullAccess')
+print(response2)

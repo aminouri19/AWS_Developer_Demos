@@ -1,0 +1,152 @@
+Create Bucket
+-------------
+import boto3
+client = boto3.client('s3')
+client.create_bucket(Bucket='report-am-55', CreateBucketConfiguration={'LocationConstraint': 'us-west-2'})
+
+
+Create Bucket
+-------------
+import boto3
+s3 = boto3.resource('s3')
+s3.create_bucket(Bucket='report-am-44', CreateBucketConfiguration={'LocationConstraint': 'us-west-2'})
+
+
+Delete Bucket
+-------------
+import boto3
+client = boto3.client('s3')
+client.delete_bucket(Bucket='report-am-55')
+
+
+Delete Bucket
+-----------------
+import boto3
+s3 = boto3.resource('s3')
+response = s3.Bucket('report-am-56').delete()
+print(response)
+
+
+Upload File to S3 bucket
+--------------
+import boto3
+client = boto3.client('s3')
+filename = "C:\\Users\\aminouri\\Documents\\castles.jpg"
+bucket_name = 'report-am-4'
+Key = 'castles.jpg'
+client.upload_file(filename, bucket_name, Key)
+
+
+Upload File to S3 bucket
+--------------
+import boto3
+s3 = boto3.resource('s3')
+filename= 'C:\\Users\\aminouri\\castles.jpg'
+response = s3.Bucket('report-am-4').upload_file(filename, Key='castles.jpg')
+print(response)
+
+
+Download file from S3 bucket
+--------------
+client = boto3.client('s3')
+filepath = 'C:\\Users\\aminouri\\Documents\\castles.jpg'
+response = client.download_file(Filename = 'new-castles.jpg,', Key='castles.jpg', Bucket='report-am-4')
+print(response)
+
+
+Download file from S3 bucket
+--------------
+import boto3
+s3 = boto3.resource('s3')
+filename= 'C:\\Users\\aminouri\\castles.jpg'
+response = s3.Bucket('report-am-4').download_file(Filename = 'new-castle.jpg', Key='castles.jpg')
+
+
+Delete Object from Bucket
+----------------
+import boto3
+client = boto3.client('s3')
+response = client.delete_object(Bucket='report-am-4',Key='castles.jpg')
+print(response)
+
+
+List all buckets
+----------------
+import boto3
+client = boto3.client('s3')
+bucketlist = client.list_buckets()
+for bucket in bucketlist['Buckets']:
+    print(bucket['Name'])
+	
+
+
+List all buckets
+----------------
+import boto3
+s3 = boto3.resource('s3')
+for bucket in s3.buckets.all():
+	print(bucket.name)
+
+
+List all objects inside a bucket
+----------------
+import boto3
+client = boto3.client('s3')
+allobjects = client.list_objects(Bucket='report-am-4')
+for object in allobjects['Contents']:
+    print(object['Key'])
+
+
+View objects in a bucket
+----------------
+import boto3
+client = boto3.client('s3')
+response = client.list_objects(Bucket='report-am-4')
+print(response)
+
+
+View obejcts in bucket
+-----------------
+import boto3
+s3 = boto3.resource('s3')
+bucket = s3.Bucket('report-am-4').objects.all
+print(list(bucket()))
+
+
+Change Bucket Policy
+-------------------
+import boto3
+import json
+client = boto3.client('s3')
+bucketname = 'report-am-4'
+bucketpolicy = {
+  "Id": "Policy1640219864917",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Amin Access to Bucket AM 4",
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::report-am-4/*",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::511349353831:user/amin"
+        ]
+      }
+    }
+  ]
+}
+
+bucketpolicy = json.dumps(bucketpolicy)
+client.put_bucket_policy(Bucket=bucketname, Policy=bucketpolicy)
+
+
+
+Delete Bucket Policy
+---------------------
+import boto3
+s3 = boto3.resource('s3')
+bucketpolicy = s3.BucketPolicy('report-am-4')
+repsonse = bucketpolicy.delete()
+print(repsonse)
+

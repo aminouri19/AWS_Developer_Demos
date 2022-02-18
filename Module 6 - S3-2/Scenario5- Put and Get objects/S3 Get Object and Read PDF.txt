@@ -1,0 +1,16 @@
+This code doesn't work
+
+import boto3
+from PyPDF2 import PdfFileReader
+from io import BytesIO
+
+bucket_name ="report-am-55"
+item_name = "pdffile.pdf"
+
+
+s3 = boto3.resource('s3')
+obj = s3.Object(bucket_name, item_name)
+fs = obj.get()['Body'].read()
+pdf = PdfFileReader(BytesIO(fs))
+data = pdf.getFormTextFields()
+print(data)

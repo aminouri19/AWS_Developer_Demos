@@ -1,0 +1,36 @@
+				Boto3 exceptions and errors
+
+Sometimes there might be service limit or quotas that we're not considering or maybe
+there is a need to validate and check the parameters in our code. These are a few reasons
+to find what exceptions are thrown by Boto3, hoe to catch and handle them and how to 
+parse error responses from AWS Services.
+
+Exceptions that you might encounter when using Boto3 will come from one of two sources: 
+botocore or the AWS services your client is interacting with.
+
+example : Catching botocore exceptions
+
+1- Run the following command to delete a bucket
+
+import boto3
+s3 = boto3.resource('s3')
+s3.Bucket(name='report-am-9').delete()
+
+Because the bucket doesn't exist we will receive an error message
+
+2- Now we use botocore exceptions to handle the error messages. use print(error) to see
+the original error message and use print("custom message") to print a custom message.
+
+import boto3
+import botocore.exceptions
+s3 = boto3.resource('s3')
+s3.Bucket(name='report-am-9').delete()
+try:
+     s3.Bucket(name='report-am-9').delete()
+except botocore.exceptions.ClientError as error:
+     print(error)
+else:
+     print("Successfully deleted bucket!")
+
+
+Ref: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/error-handling.html

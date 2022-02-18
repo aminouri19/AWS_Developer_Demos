@@ -1,0 +1,1 @@
+https://dynobase.dev/dynamodb-indexes/#:~:text=The%20key%20difference%20is%20that,query%20them%20using%20different%20attributes.

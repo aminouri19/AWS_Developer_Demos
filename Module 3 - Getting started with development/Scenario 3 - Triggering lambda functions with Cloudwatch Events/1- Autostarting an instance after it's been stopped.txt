@@ -1,0 +1,73 @@
+Autostarting an instance after it's been stopped
+
+For this scenario to work we perform the following
+
+1- Create a Python code to start the instance
+2- Create an Event Bridge Rules to detect an instance has stopped
+3- Create a lambda function to trigger the code to start an instance when an event happens
+4- Test it
+--------------------------------------------------------------------------------------
+
+1- To start an instance use the following Python code
+
+import boto3
+client = boto3.client('ec2')
+response = client.start_instances(InstanceIds=['i-0d19ce488cb88b2ca'])
+print(response)
+
+
+-------------------------------------------------------------------------------
+
+2- Create a lambda function
+	1- Open Lmabda
+	2- Click Create Function
+	3- Select "Author from Scratch"
+	4- Call the function name "Start the cool App"
+	5- Since your code is a Python App the select "Python 3.9"
+	6- Since lambda needs access to EC2, select a lambda role with EC2 access permission
+	7- Click "Create Function"
+	8- Under the lambda_function tab, paste the code to start the instance
+
+import json
+import boto3
+
+def lambda_handler(event, context):
+    # TODO implement
+    client = boto3.client('ec2')
+    response = client.start_instances(InstanceIds=['i-0d19ce488cb88b2ca'])
+    print(response)
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Hello from Lambda!')
+    }
+
+
+----------------------------------------------------------
+
+3- To create an Event Bridge rule follow the steps below
+	1- Open Event Bridge
+	2- Click "Create Rule"
+	3- Provide a meaningful name (e.g "Start the cool App")
+	4- Select "Event Pattern"
+	5- Select "Pre-defined pattern by service"
+	6- For "Service Provider", Select "AWS"
+	7- For "Service Name" select "EC2"
+	8- For "Event Type", select "EC2 instance State-Change Notification"
+	9- For specific states, select "Stopped"
+	10- "Specific instance id's", paste the instance id
+
+Note: On the right hand side, there is a box called "Event Pattern". Copy the event so 
+you can use it when testing the lambda function
+
+	11- Under "select targets", select the lambda function that was create above.
+	12- Click the "Create" button
+
+------------------------------------------------
+
+4- To test the process, use the following code
+	1- Copy the event pattern from event bridge and have it ready
+	2- Open lambda, under "Code Source", Click the down arrow by the "Test" button and select
+		the "Configure test event"
+	3- Under "Event Name", provide a name for the event (e.g. "Instance Stopped") 
+	4- in the event box, paste the event from event bridge pointing the the descired instance
+	5- Click "Save" and run the event

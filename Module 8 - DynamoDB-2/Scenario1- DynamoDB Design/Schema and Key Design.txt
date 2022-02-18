@@ -1,0 +1,33 @@
+				Schema and Key Design
+
+Why it matters to define the right key?
+---------------------------------------
+1- It can limit the type of query
+2- Possibility of throttling - rejecting your request for not having resources 
+   and creating hot partitions
+
+
+Define Keys
+-----------
+Primary Key: Is always required. It can be one partition key or one partition key plus a sort key 
+Partition key (Hash Key): DynamoDb will store item information in partitions. It uses the key value as an input for the hashing
+               function. The output of the hashing function is a location on a Dynamodb partition. When a request 
+	       comes in for your key value pair, the hashing function uses the key value as input to generate a hash
+	       and use it to find the data in the partition.
+Sort Key (Range Key): It can assist to perform better queries by sorting your data on the partition. This means all
+	        the data that have the same partition key will be located on the same machine and partition and sorted 
+		based on the sort key. The cobination of the partition key and sort key should be unique.
+
+RCU and WCU : Read and write capacity for Dynamodb. This capacity is divided between partitions. If we have 400 RCU's and
+	      we have two partitions, each partition will have access to 200 RCU's.
+
+Adaptive Capacity: DynamoDB adaptive capacity makes sure that if one partition is a hot partition and other partitions have
+		   have RCU capacity, it can use it for the hot partition.
+
+
+Summary: 
+1- If you need to query based on key details, use the partition key plus sort key primary key
+2- If you query only based a key, then just use a partition key as your Primary key
+
+
+

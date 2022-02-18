@@ -1,0 +1,27 @@
+	Assign or Change Bucket Policy for a Bucket
+
+
+import boto3
+import json
+client = boto3.client('s3')
+bucketname = 'report-am-4'
+bucketpolicy = {
+  "Id": "Policy1640219864917",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Amin Access to Bucket AM 4",
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::report-am-4/*",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::511349353831:user/amin"
+        ]
+      }
+    }
+  ]
+}
+
+bucketpolicy = json.dumps(bucketpolicy)
+client.put_bucket_policy(Bucket=bucketname, Policy=bucketpolicy)

@@ -1,0 +1,8 @@
+    import boto3
+    ddb = boto3.resource('dynamodb')
+
+    # Input Item to Table
+    table = ddb.Table('Transactions')
+    table.put_item(Item= {'TransactionId': '9a0','company':  'microsoft', 'State': 'Pending'})
+    print('Items added Successfully!')
+

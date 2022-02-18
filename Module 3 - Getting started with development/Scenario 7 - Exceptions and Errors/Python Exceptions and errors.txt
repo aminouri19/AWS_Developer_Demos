@@ -1,0 +1,38 @@
+		Python exceptions and errors
+
+In python we can use the try:, except:, else:, finally: block to keep track of exceptions
+and errors. In the example below we will try to open a file.
+
+1- Run the following command
+*	f = open("C:\\Users\\aminouri\\Documents\\Coding\\testfile.txt")
+
+This command should open the file we have defined but instead we recieve a "Traceback" error
+mentioning the filename is incorrect. If we fix the filename the error will go away.
+
+*	f = open("C:\\Users\\aminouri\\Documents\\Coding\\test_file.txt")
+
+
+2- Now we will move the command to a try:, except:, block like below
+
+try:
+     f = open("C:\\Users\\aminouri\\Documents\\Coding\\testfile.txt")
+except Exception:
+     print("This file doesn't exist")
+
+This simply means, run the command and if it fails it will display the message 
+under the exceptions section on the screen. So we won't see the exception message anymore, but we will
+see the customized message.
+
+
+3- We can also expand the try:, except:, block by adding else:, to it like below. If the file exists, then the else
+block will run otherwise we will see the error message under the except section.
+
+try:
+     f = open("C:\\Users\\aminouri\\Documents\\Coding\\test_file.txt")
+except Exception:
+     print("This file doesn't exist")
+else:
+     print(f.read())
+     f.close()
+
+	

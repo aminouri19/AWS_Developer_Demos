@@ -1,0 +1,14 @@
+				Query all items using Cli
+
+To get all items in the table use the following
+
+*	aws dynamodb scan --table "Notes"
+
+To get all items and filter the results based on user4
+
+aws dynamodb scan --table-name Notes --scan-filter '{
+        "UserId":{
+            "AttributeValueList":[ {"S":"User4"} ],
+            "ComparisonOperator": "EQ"
+        }
+    }'

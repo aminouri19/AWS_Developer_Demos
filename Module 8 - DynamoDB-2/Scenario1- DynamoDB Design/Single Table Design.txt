@@ -1,0 +1,38 @@
+				Single Table Design
+
+
+1- If we want to query based on attributes (Not partition and sort key), we have to use
+a secondary index. This method will create a new index with the attribute as the primary key
+thus allowing us to query based on the primary key.
+
+Note: Secondary indexes are read-only, so you can't update or make changes in secondary index
+and it's good for read operations. If you want to make a change after your query, just find the 
+partion and sort key for the object and use that to find the item and then edit.
+
+Note: When creating a secondary index we can specify witch attributes will be projected in the 
+secondary index. If we create one and decide to change it we can't and we must create a new
+secondary index with new attributes.
+
+Note: It's better to project all attributes when creating your secondary index
+
+2- Create your ERD 
+3- Create access pattern
+4- Use generic primary key values: e.g. call your primary key PK and call your sort key SK.
+Although we can add names like "organization-id" for primary key and "user-id" for sort key,
+that's too specific so we'll use generic PK and SK.
+
+example
+1- We have a SAAS application
+2- Our entities are Organizations and Users
+3- We have used PK for Partition Key and SK for Sort Key. Organizations and users have their 
+own prefix
+4- Items with the same partition key reside in the same partition
+
+Partition-Key    Sort-Key       Attributes
+-------------    --------     -------------
+     PK             SK        Lastname|Role  
+-------------    --------     --------------
+Org:Amazon       User:Amin    Mansouri|instructor
+Org:Amazon       User:Jeff    Bezos   |CEO
+Org:Facebook     User:Mark    Zckrberg|CEO
+
