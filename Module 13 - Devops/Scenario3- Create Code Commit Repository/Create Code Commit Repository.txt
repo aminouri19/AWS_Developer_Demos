@@ -1,0 +1,26 @@
+			Create Code Commit Repository
+
+1- Open code commit
+2- Click Create Repository named "AWS_Developer_Demos"
+3- Provide repository name and click create
+
+Note: make sure git has been installed
+
+4- Open AWS IAM, select user and under permsissions tab add "AWSCodeCommitFullAccess"
+5- Under "Security Credentials" and under "HTTPS Git credentials for AWS CodeCommit" tab click "Generate Credentials"
+6- Open the folder that must be pushed to code commit. Right click and select "Git Bash Here"
+7- Create a repository from this location
+*	git init
+8- Select all files to be added to this repo
+*	git add .
+9- Check status
+*	git status
+10- capture a snapshot of the projects currently staged changes
+*	git commit -m "First commit for AWS Developer demos"
+11- Add the repository to your local machine after creating it on github or code commit
+*	git remote add origin https://git-codecommit.us-west-2.amazonaws.com/v1/repos/AWS_Developer_Demos
+12- If you named your branch "main" then use the following command to push files to repository
+*	git push origin main
+ 
+Note: To change your remote repository use the follwoing command
+*	git remote set-url origin <Path>

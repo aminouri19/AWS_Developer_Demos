@@ -2,7 +2,7 @@ Trigger lambda Function after uploading a file to S3
 
 General steps:
 
-1-Create a lmabda function
+1- Create a lmabda function
 
 2- Create an S3 bucket
 
@@ -35,7 +35,7 @@ def lambda_handler(event,context):
     key = event['Records'][0]['s3']['object']['key']
     key = urllib.parse.unquote_plus(key, encoding='utf-8')
 
-    message = 'The file named' + key + 'was uploded to bucket named' + bucket_name
+    message = 'The file named ' + key + 'was uploded to bucket named' + bucket_name
     print(message)
 
     response = s3_client.get_object(Bucket=bucket_name,Key=key)
